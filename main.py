@@ -1,22 +1,67 @@
 import codons
 import amino_acid
+from Bio.Seq import Seq
+import time
+import string
 
-print("hello hello, welcome to DNA tracing")
-DNA = input("input a string of DNA: ")
-#make the inputed function to look like a 3'-5' DNA strand
-DNA = DNA.upper()
-#remove ALL the white spaces
-DNA = "".join(DNA.split())
-print("3'-5' DNA strand =", DNA)
+print("Hello, welcome to DNA tracing\nWhat do you want to do today?")
+user = input("Transcribe, Translate, or Complement DNA?: ")
+user = user.lower()
 
-#translate this into a 5'-3' mRNA strand
-mRNA = codons.RNA(DNA)
-print("5'-3' mRNA strand =", mRNA)
+commands = ["transcribe", "translate", "complement dna"]
 
-protein = amino_acid.translation(mRNA)
+while True:
+    if user in commands:
+        DNA = input("Input DNA 3' - 5'")
+        DNA=DNA.upper()
+        DNA=DNA.rstrip()
+        #break into list then join to remove the white space if were given any white space in between
+        DNA = DNA.replace(" ","")
+        #using DNA chain and turn it into a sequence for future uses
+        my_dna = Seq(DNA)
+        break
+    else:
+        print("Please input approriate demand")
+        user = input("Transcribe, Translate, or Complement DNA?: ")
+        continue
 
-print(protein)
+if user == "transcribe":
+    print("\nTranscribing...")
+    time.sleep(1)
+    mRNA = codons.RNA(my_dna)
+    print("mRNA:", mRNA)
 
-amino_acid.pr1nt_a(protein)
+protein = list()
+
+if user == "translate":
+    print("\nTranscribing...")
+    mRNA = codons.RNA(my_dna)
+    time.sleep(1)
+    print(mRNA)
+    print("\nTranslating...")
+    time.sleep(1)
+    protein = amino_acid.translation(mRNA)
+
+    chain = ''
+    if len(protein) < 1:
+        print("No START codon detected, please insert it or have the DNA be in 3' - 5'")
+    else:
+        for i in range(len(protein)):
+            if i < len(protein) - 1:
+                chain+= (protein[i]+' ')
+            else:
+                chain += protein[i]
+        print("Protein chain:",chain)
+
+if user == "complement dna":
+    #applying bioPython seq
+    print("5'-3' DNA:", my_dna.complement())
+
+
+
+
+
+
+
 
 
