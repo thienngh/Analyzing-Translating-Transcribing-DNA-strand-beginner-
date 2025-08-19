@@ -19,3 +19,14 @@ def RNA(DNA):
         mRNA += rna
     return mRNA
 
+def enoughcodons(DNA):
+    if len(DNA) % 3 != 0:
+        print("There are remaining nucleotides and will be cut at the end")
+
+def clean_dna(s: str) -> str:
+    s = s.upper().replace(" ", "").replace("\n", "").replace("\r", "").strip()
+    valid = {"A","T","C","G"}
+    bad = {ch for ch in s if ch not in valid}
+    if bad:
+        raise ValueError(f"Invalid DNA symbols: {', '.join(sorted(bad))}")
+    return s
