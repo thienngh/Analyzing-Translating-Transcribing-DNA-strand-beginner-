@@ -62,7 +62,6 @@ def amino(codons):
 def translation(mRNA):
     # let the strand of mRNA to go through, break them down into pair of codon, translate each pair but only start
     # from the AUG codon, before that is stripped off and end at the stop codon
-    anti_codons = list()
     protein = list()
     started = False
     anti_codons = codons.count_codons(mRNA)
@@ -75,18 +74,25 @@ def translation(mRNA):
                 started = True #switch started to be true so it will go on to translate the remaining
                 continue #finishing the start codon beginining to translate the rest
         if started: #after it's started
+            if amino(aa) == "error":
+                if len(mRNA)%3 != 0: break
+                else:
+                    print("error spotted")
+                    break  # break if see error
             if aa in STOP:
                 print("STOP codon spotted, stopping")
                 break
             protein.append(amino(aa)) # check if its stop then start pasting in the sequence
+
     return protein
 
+#get the count of each proteins
 def count_amino(protein):
     counts = dict()
     for aa in protein:
         counts[aa] = counts.get(aa,0) + 1
     return counts
-
+#print by tuples
 def pr1nt_a(protein):
     print("Counting amino acid coded")
     for k,v in count_amino(protein).items():
