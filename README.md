@@ -1,1 +1,2 @@
 # DNA-beginner
+My first Python project using what I have learned and integrated it into a biengineering machine learning tool. Currently, I have written all of my code but I will update to be able to apply the use of libraries such as NumPy and BioPython. Currently working on tracking the proteins of an inserted DNA strand and able to spot diseases such as sickle cell anemia by comparing it to a healthy gene expression.
