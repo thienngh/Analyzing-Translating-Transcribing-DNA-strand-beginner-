@@ -6,22 +6,22 @@ The transcription and translation processes are currently powered by dictionarie
 
 At this stage, the tool translates by breaking the sequence into codons and then converting each codon until a STOP codon is encountered. This means it currently works only for DNA sequences that encode a single protein strand. For example, the hemoglobin (Hb) strand can be used to determine the presence of sickle cell anemia.
 
-Current Features
+Current Features:
 
-Accepts a DNA strand (3'-5') and produces the complementary strand (5'-3').
+-Accepts a DNA strand (3'-5') and produces the complementary strand (5'-3').
 
-Transcribes DNA into mRNA.
+-Transcribes DNA into mRNA.
 
-Translates mRNA into a protein chain.
+-Translates mRNA into a protein chain.
 
-Detects sickle cell anemia expression using conditional functions.
+-Detects sickle cell anemia expression using conditional functions.
 
 
 
 Planned Improvements
 
-Broader integration of BioPython for sequence analysis.
+-Broader integration of BioPython for sequence analysis.
 
-Calculation of %C/G content to evaluate DNA stability.
+-Calculation of %C/G content to evaluate DNA stability.
 
-Implementation of ORF (Open Reading Frame) scanning for more flexible protein prediction.
+-Implementation of ORF (Open Reading Frame) scanning for more flexible protein prediction.
