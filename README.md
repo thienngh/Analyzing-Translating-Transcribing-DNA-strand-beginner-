@@ -16,6 +16,8 @@ Translates mRNA into a protein chain.
 
 Detects sickle cell anemia expression using conditional functions.
 
+
+
 Planned Improvements
 
 Broader integration of BioPython for sequence analysis.
