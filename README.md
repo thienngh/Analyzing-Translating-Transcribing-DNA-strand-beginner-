@@ -1,4 +1,25 @@
-# DNA-beginner
-My first Python project integrates what I have learned into a bioengineering machine learning tool. It takes a 3'-5' DNA strand as input and generates its 5'-3' complementary DNA strand. From there, it transcribes the sequence into mRNA and then translates it into a protein chain. The transcription and translation processes are powered by dictionaries and code I created, while I later integrated BioPython to handle complement DNA strand formation. As of right now, it is only able to dictate the strand by first breaking the strand down into codons and then translating each codon until a STOP is spotted. Therefore, it can only be used if there is only a single strand of protein in the provided DNA strand (in this case, the Hb strand can be used to determine if there is sickle cell anemia).
+Project Overview
 
-Currently, I have written all of the code, but I plan to update it to include libraries such as BioPython more extensively. I have also been able to track the DNA strand and spot if there is an expression of sickle cell anemia by using the conditional functions. However, more studies are required before I can update it to calculate %C/G and be able to predict and determine if a strand is stable or not. I also want to do an ORFS of the strand. 
+This is my first Python project, where I integrated what I’ve learned into a bioengineering machine learning tool. The program takes a 3'-5' DNA strand as input and generates its complementary 5'-3' DNA strand. From there, it transcribes the sequence into mRNA and then translates it into a protein chain.
+
+The transcription and translation processes are currently powered by dictionaries and custom code I wrote, while BioPython has been integrated to handle complementary DNA strand formation.
+
+At this stage, the tool translates by breaking the sequence into codons and then converting each codon until a STOP codon is encountered. This means it currently works only for DNA sequences that encode a single protein strand. For example, the hemoglobin (Hb) strand can be used to determine the presence of sickle cell anemia.
+
+Current Features
+
+Accepts a DNA strand (3'-5') and produces the complementary strand (5'-3').
+
+Transcribes DNA into mRNA.
+
+Translates mRNA into a protein chain.
+
+Detects sickle cell anemia expression using conditional functions.
+
+Planned Improvements
+
+Broader integration of BioPython for sequence analysis.
+
+Calculation of %C/G content to evaluate DNA stability.
+
+Implementation of ORF (Open Reading Frame) scanning for more flexible protein prediction.
