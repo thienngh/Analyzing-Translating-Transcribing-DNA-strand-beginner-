@@ -6,76 +6,90 @@ import string
 import sicklecell
 
 print("Hello, welcome to DNA tracing\nWhat do you want to do today?")
-user = input("Transcribe, Translate, or Complement DNA?: ")
+user = input("Transcribe, Translate, or Complement DNA? or Enter to quit: ")
 user = user.lower()
-
-commands = ["transcribe", "translate", "complement dna"]
-
+user = user.strip()
 while True:
-    if user in commands:
-        my_DNA = input("Input DNA 3' - 5'")
-        my_DNA = codons.clean_dna(my_DNA)
-        #using DNA chain and turn it into a sequence for future uses
-        my_dna = Seq(my_DNA)
-        codons.enoughcodons(my_DNA)
-        break
-    else:
-        print("Please input approriate demand")
-        user = input("Transcribe, Translate, or Complement DNA?: ")
-        continue
+    if user == "":
+        print("Thank you!")
+        quit()
+    commands = ["transcribe", "translate", "complement dna"]
 
-if user == "transcribe":
-    print("\nTranscribing...")
-    time.sleep(1)
-    mRNA = codons.RNA(my_dna)
-    print("mRNA:", mRNA)
+    five_three = False # check if it's 5'-3'
+    while True:
+        if user in commands:
+            my_dna = input("Input DNA: ")
+            if my_dna == "":
+                quit()
+            try:
+                my_dna = codons.clean_dna(my_dna)
+            except ValueError as e:
+                print(e)
+                continue
 
-protein = list()
-
-if user == "translate":
-    print("\nTranscribing...")
-    mRNA = codons.RNA(my_dna)
-    time.sleep(1)
-    print(mRNA)
-    print("\nTranslating...")
-    time.sleep(1)
-    protein = amino_acid.translation(mRNA)
-
-    chain = ''
-    if len(protein) < 1:
-        print("No START codon detected, please insert it or have the DNA be in 3' - 5'")
-    else:
-        chain = ""
-        for i in range(len(protein)):
-            if i < len(protein) - 1:
-                chain += (protein[i] + ' ')
-            else:
-                chain += protein[i]
-        print("Protein chain:", chain)
-        while True:
-            ans = input("Do you want to check for sickle cell mutation, Y/N?: ").strip().lower()
-            if ans in ["y", "n"]:
-                break
-            print("Please enter Y or N only!")
-
-        if ans == "y":
-            if len(protein) >= 6:
-                if sicklecell.mutation(protein):
-                    print("You have Sickle Cell Anemia mutation")
-                else:
-                    print("You do not have Sickle Cell Anemia mutation")
-            else:
-                print("Not enough protein to check")
+            my_dna = Seq(my_dna)  #using DNA chain and turn it into a sequence for future uses
+            if codons.type_strand(): #if it is a 5'-3' we find its complement template strand 3'-5' and perform like normal
+                my_dna = my_dna.complement()
+                five_three = True
+            codons.enoughcodons(my_dna)
+            break
         else:
-            print("Okay, exiting...")
+            print("Please input approriate demand")
+            user = input("Transcribe, Translate, or Complement DNA?: ")
+            continue
 
+    if user == "transcribe":
+        print("\nTranscribing...")
+        time.sleep(1)
+        mRNA = codons.RNA(my_dna)
+        print("mRNA:", mRNA)
 
+    protein = list()
 
+    if user == "translate":
+        print("\nTranscribing...")
+        mRNA = codons.RNA(my_dna)
+        time.sleep(1)
+        print(mRNA)
+        print("\nTranslating...")
+        time.sleep(1)
+        protein = amino_acid.translation(mRNA)
 
-if user == "complement dna":
-    #applying bioPython seq
-    print("5'-3' DNA:", my_dna.complement())
+        chain = ''
+        if len(protein) < 1:
+            print("No START codon detected, please insert it")
+        else:
+            chain = ""
+            for i in range(len(protein)):
+                if i < len(protein) - 1:
+                    chain += (protein[i] + ' ')
+                else:
+                    chain += protein[i]
+            print("Protein chain:", chain)
+            while True:
+                ans = input("Do you want to check for sickle cell mutation, Y/N?: ").strip().lower()
+                if ans in ["y", "n"]:
+                    break
+                print("Please enter Y or N only!")
 
+            if ans == "y":
+                if len(protein) >= 6:
+                    if sicklecell.mutation(protein):
+                        if result is True:
+                            print("Mutation detected: Sickle-cell (E→V)")
+                        elif result is False:
+                            print("Normal hemoglobin")
+                else:
+                    print("Sequence too short or ambiguous to check")
+
+    if user == "complement dna":
+        if five_three: #if it's 5'-3' we already switched to 3'-5' so we need to print the one we already complemented
+            print("3'-5' DNA:", my_dna)
+        else:
+            print("5'-3' DNA:", my_dna.complement())
+    user = input("Transcribe, Translate, or Complement DNA? or Enter to quit: ")
+    user = user.lower()
+    user = user.strip()
 
 
 
