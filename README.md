@@ -14,7 +14,7 @@ Current Features:
 
 -Translates mRNA into a protein chain.
 
--Detects sickle cell anemia expression using conditional functions.
+-Detects sickle cell anemia expression using conditional functions by going through the list of translated proteins and seeing if the one in the 6th position relative to the MET is E or V.
 
 
 
