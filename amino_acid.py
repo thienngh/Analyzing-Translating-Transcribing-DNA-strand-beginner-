@@ -59,13 +59,27 @@ def amino(codons):
     aa = genetic_code.get(codons,'error')
     return aa
 
+def validate_mrna(mrna):
+    if not set(mrna) <= {"A", "U", "C", "G"}:
+        raise ValueError("mRNA contains invalid characters (allowed: A,U,C,G)")
+
 def translation(mRNA):
     # let the strand of mRNA to go through, break them down into pair of codon, translate each pair but only start
     # from the AUG codon, before that is stripped off and end at the stop codon
+    STOP = ["UAG", "UGA", "UAA"]
+
+    try:
+        # validate characters
+        if not set(mRNA) <= {"A", "U", "C", "G"}:
+            raise ValueError("mRNA contains invalid characters (allowed: A,U,C,G)")
+    except ValueError as e:
+        print(f"Validation error: {e}")
+        return []  # return empty protein if invalid
+    
     protein = list()
     started = False
     anti_codons = codons.count_codons(mRNA)
-    STOP = ["UAG","UGA","UAA"]
+
     for aa in anti_codons:
         #aa is the WORD in the list so aa is not like 0 1 2 but rather UAG AUG etc
         if not started:
@@ -75,12 +89,9 @@ def translation(mRNA):
                 continue #finishing the start codon beginining to translate the rest
         if started: #after it's started
             if amino(aa) == "error":
-                if len(mRNA)%3 != 0: break
-                else:
-                    print("error spotted")
-                    break  # break if see error
+                print("error spotted")
+                break  # break if see error
             if aa in STOP:
-                print("STOP codon spotted, stopping")
                 break
             protein.append(amino(aa)) # check if its stop then start pasting in the sequence
 
@@ -92,8 +103,5 @@ def count_amino(protein):
     for aa in protein:
         counts[aa] = counts.get(aa,0) + 1
     return counts
-#print by tuples
-def pr1nt_a(protein):
-    print("Counting amino acid coded")
-    for k,v in count_amino(protein).items():
-        print(k,v)
+
+
